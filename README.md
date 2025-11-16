@@ -63,13 +63,13 @@ git clone https://github.com/hugoduncan/mcp-clj
 cd mcp-clj
 
 # Start stdio server (recommended for Claude Desktop)
-clj -M:stdio-server
+clojure -M:stdio-server
 
 # Start SSE server (HTTP) on port 3001 (default)
-clj -M:sse-server
+clojure -M:sse-server
 
 # Start SSE server on custom port
-clj -M:sse-server --port 8080
+clojure -M:sse-server --port 8080
 ```
 
 ## Server Usage
@@ -247,23 +247,23 @@ git clone https://github.com/hugoduncan/mcp-clj
 cd mcp-clj
 
 # Start REPL with all components
-clj -M:dev
+clojure -M:dev
 ```
 
 ### Testing
 
 ```bash
 # Fast unit tests (default)
-clj -M:kaocha:dev:test
+clojure -M:kaocha:dev:test
 
 # Integration tests (starts servers)
-clj -M:kaocha:dev:test --focus :integration
+clojure -M:kaocha:dev:test --focus :integration
 
 # All tests
-clj -M:kaocha:dev:test --focus :unit :integration
+clojure -M:kaocha:dev:test --focus :unit :integration
 
 # Specific namespace
-clj -M:kaocha:dev:test --focus mcp-clj.mcp-server.core-test
+clojure -M:kaocha:dev:test --focus mcp-clj.mcp-server.core-test
 ```
 
 ### REPL Development
@@ -328,7 +328,7 @@ All components use the `mcp-clj` namespace and follow JSON-RPC 2.0 with MCP prot
 
 1. Fork the repository
 2. Create a feature branch
-3. Make changes and ensure tests pass: `clj -M:kaocha:dev:test`
+3. Make changes and ensure tests pass: `clojure -M:kaocha:dev:test`
 4. Submit a pull request
 
 ## License
