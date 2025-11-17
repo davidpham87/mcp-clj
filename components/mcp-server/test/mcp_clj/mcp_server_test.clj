@@ -465,6 +465,19 @@
         (mcp/remove-tool! server "test-tool")
         (is (nil? (get @(:tool-registry server) "test-tool")))
 
+        ;; Test adding a collection of tools
+        (let [tool1 {:name "tool1"
+                     :description "Tool 1"
+                     :inputSchema {:type "object"}
+                     :implementation (fn [_ _] {})}
+              tool2 {:name "tool2"
+                     :description "Tool 2"
+                     :inputSchema {:type "object"}
+                     :implementation (fn [_ _] {})}]
+          (mcp/add-tools! server [tool1 tool2])
+          (is (= tool1 (get @(:tool-registry server) "tool1")))
+          (is (= tool2 (get @(:tool-registry server) "tool2"))))
+
         ;; Test adding invalid tool
         (is (thrown? clojure.lang.ExceptionInfo
               (mcp/add-tool! server (dissoc test-tool :implementation))))

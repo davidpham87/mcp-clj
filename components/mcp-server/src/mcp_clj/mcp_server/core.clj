@@ -442,13 +442,27 @@
       (fn [handler]
         #(request-handler server handler %1 %2)))))
 
+(defn- -add-tool!
+  "Private helper to add a single tool without notifications."
+  [server tool]
+  (when-not (tools/valid-tool? tool)
+    (throw (ex-info "Invalid tool definition" {:tool tool})))
+  (swap! (:tool-registry server) assoc (:name tool) tool))
+
 (defn add-tool!
   "Add or update a tool in a running server"
   [server tool]
   (log/info :server/add-tool!)
-  (when-not (tools/valid-tool? tool)
-    (throw (ex-info "Invalid tool definition" {:tool tool})))
-  (swap! (:tool-registry server) assoc (:name tool) tool)
+  (-add-tool! server tool)
+  (notify-tools-changed! server)
+  server)
+
+(defn add-tools!
+  "Add or update a collection of tools in a running server."
+  [server tools]
+  (log/info :server/add-tools!)
+  (doseq [tool tools]
+    (-add-tool! server tool))
   (notify-tools-changed! server)
   server)
 
